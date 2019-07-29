@@ -4,7 +4,7 @@ using System.Text;
 
 namespace KoeLib.DllModule.Settings
 {
-    internal class ModuleRootDirectorySettings
+    public sealed class ModuleRootDirectorySettings
     {
         public string Directory { get; set; }
 

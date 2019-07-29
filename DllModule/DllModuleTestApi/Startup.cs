@@ -29,14 +29,11 @@ namespace DllModuleTestApi
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {            
-            services.AddDllModules(Configuration,
-            "KoeLib:DllModuleSettings",
-            configurator => 
-            {
-                configurator.AddModule<ExternTestModule, TestSingleton>()
-                .AddModule<ExternTestModule, TestSingleton>();
-            });
+        {
+            string name =  typeof(TestSingleton).AssemblyQualifiedName;
+            services.AddDllModules(Configuration, "KoeLib:DllModuleSettings");
+
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 

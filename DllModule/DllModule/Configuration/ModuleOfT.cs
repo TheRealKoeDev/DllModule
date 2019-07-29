@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace KoeLib.DllModule.Configuration.Implementations
+namespace KoeLib.DllModule.Configuration
 {
     internal class Module<TInstance> : IModule<TInstance>
         where TInstance : class

@@ -5,12 +5,12 @@ using System.Text;
 
 namespace KoeLib.DllModule.Settings
 {
-    internal class ModuleSettings
+    public sealed class ModuleSettings
     {
-        [Required]
         public string Type { get; set; }
 
-        [Required]
+        public KindOfInstance? KindOfInstance { get; set; }
         public string TypeOfInstance { get; set; }
+        public string NamespaceOfInstance { get; set; }
     }
 }

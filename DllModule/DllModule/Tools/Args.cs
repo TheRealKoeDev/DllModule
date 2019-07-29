@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Diagnostics;
 using System.Runtime.CompilerServices;
-using System.Text;
 
 namespace KoeLib.DllModule.Tools
 {
-    internal class Args
+    [DebuggerStepThrough]
+    internal static class Args
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public static void ThrowExceptionIfNull(object arg1, string nameOfArg1)

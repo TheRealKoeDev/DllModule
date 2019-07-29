@@ -4,7 +4,7 @@ using System.Text;
 
 namespace KoeLib.DllModule.Settings
 {
-    internal class ModuleAssemblySettings
+    public sealed class ModuleAssemblySettings
     {
         public string Filename { get; set; }
 
