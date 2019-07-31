@@ -5,11 +5,7 @@ namespace DllModuleTestApiLibrary
 {
     public class TestSingleton
     {
-        public int Value = 0;
-    }
-
-    public interface ExternTestModule : IInitializable<TestSingleton>
-    {
-
+        public DateTime CreatedAt = DateTime.Now;
+        public DateTime InitializedAt;
     }
 }

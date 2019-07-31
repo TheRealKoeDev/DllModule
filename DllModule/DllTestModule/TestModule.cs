@@ -1,9 +1,10 @@
 ﻿using DllModuleTestApiLibrary;
+using KoeLib.DllModule;
 using System;
 
 namespace DllTestModule
 {
-    public class Test : ExternTestModule
+    public class Test : IModule<TestSingleton>
     {
         TestSingleton _module;
         public Test()
@@ -14,7 +15,7 @@ namespace DllTestModule
         public void Initialize(TestSingleton module)
         {
             _module = module;
-            module.Value = 100;
+            _module.InitializedAt = DateTime.Now;
         }
     }
 }

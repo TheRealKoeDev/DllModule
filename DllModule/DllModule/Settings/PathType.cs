@@ -4,10 +4,9 @@ using System.Text;
 
 namespace KoeLib.DllModule.Settings
 {
-    public enum KindOfInstance : int
+    public enum PathType: int
     {
-        Singleton = 0,
-        Scoped = 1,
-        Transient = 2
+        AbsolutePath = 0,
+        RelativePath = 1
     }
 }

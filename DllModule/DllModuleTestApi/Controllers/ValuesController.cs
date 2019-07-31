@@ -2,6 +2,7 @@
 using DllModuleTestApiLibrary;
 using KoeLib.DllModule.Configuration;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 
 namespace DllModuleTestApi.Controllers
 {
@@ -9,7 +10,7 @@ namespace DllModuleTestApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        public ValuesController(IModule<TestSingleton> module)
+        public ValuesController(IConfiguration config, IModularService<TestSingleton> module)
         {
 
         }

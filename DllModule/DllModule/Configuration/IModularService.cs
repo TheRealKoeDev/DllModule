@@ -4,9 +4,9 @@ using System.Text;
 
 namespace KoeLib.DllModule.Configuration
 {
-    public interface IModule<TInstance>
-        where TInstance: class
+    public interface IModularService<TService>
+        where TService: class
     {
-        TInstance Instance { get; }
+        TService Service { get; }
     }
 }
