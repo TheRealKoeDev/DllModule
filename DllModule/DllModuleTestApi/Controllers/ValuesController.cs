@@ -10,7 +10,7 @@ namespace DllModuleTestApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        public ValuesController(IConfiguration config, IModularService<TestSingleton> module)
+        public ValuesController(IConfiguration config, IModularService<TestSubService> module)
         {
 
         }

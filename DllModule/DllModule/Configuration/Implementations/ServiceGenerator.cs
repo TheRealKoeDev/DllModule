@@ -7,13 +7,11 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Reflection;
-using System.Reflection.Emit;
 
 namespace KoeLib.DllModule.Configuration.Implementations
 {
-    public class ServiceGenerator
+    internal class ServiceGenerator: IServiceGenerator
     {
         private IConfiguration _configuration;
         private IServiceCollection _services;
@@ -26,22 +24,34 @@ namespace KoeLib.DllModule.Configuration.Implementations
             _configuration = configuration;
         }
 
-        public void AddSingletonModularService<TServiceType>()
-            where TServiceType : class
-            => AddModularService<TServiceType>(ServiceLifetime.Singleton);
-
-        public void AddScopedModularService<TServiceType>()
-            where TServiceType : class
-            => AddModularService<TServiceType>(ServiceLifetime.Scoped);
-
-        public void AddTransientModularService<TServiceType>()
-            where TServiceType : class
-            => AddModularService<TServiceType>(ServiceLifetime.Transient);
-
-        private void AddModularService<TServiceType>(ServiceLifetime lifetime)
-            where TServiceType : class
+        public IServiceGenerator AddSingletonModularService<TService>(Action<ISubServiceGenerator<TService>> subServiceGeneratorAction = null)
+            where TService : class
         {
-            Type serviceType = typeof(TServiceType);
+            AddModularService<TService>(ServiceLifetime.Singleton);
+            subServiceGeneratorAction?.Invoke(new ModularServiceGenerator<TService>(_services, ServiceLifetime.Singleton));
+            return this;
+        }
+
+        public IServiceGenerator AddScopedModularService<TService>(Action<ISubServiceGenerator<TService>> subServiceGeneratorAction = null)
+            where TService : class
+        {
+            AddModularService<TService>(ServiceLifetime.Scoped);
+            subServiceGeneratorAction?.Invoke(new ModularServiceGenerator<TService>(_services, ServiceLifetime.Scoped));
+            return this;
+        }
+
+        public IServiceGenerator AddTransientModularService<TService>(Action<ISubServiceGenerator<TService>> subServiceGeneratorAction = null)
+            where TService : class
+        {
+            AddModularService<TService>(ServiceLifetime.Transient);
+            subServiceGeneratorAction?.Invoke(new ModularServiceGenerator<TService>(_services, ServiceLifetime.Transient));
+            return this;
+        }
+
+        private IServiceGenerator AddModularService<TService>(ServiceLifetime lifetime)
+            where TService : class
+        {
+            Type serviceType = typeof(TService);
 
             ModularServiceSettings settings = _settings.SingleOrDefault(sett => sett.Typename == serviceType.Name && sett.Namespace == serviceType.Namespace);
             if (settings == null)
@@ -57,26 +67,28 @@ namespace KoeLib.DllModule.Configuration.Implementations
                 Assembly ass = LoadAssembly(dllPath);
                 var x = ass.GetTypes();
 
-                moduleTypes.Add(LoadType<TServiceType>(ass, module.FullNameOfType));
+                moduleTypes.Add(LoadType<TService>(ass, module.FullNameOfType));
             }
 
-            _services.AddSingleton(typeof(IServiceModuleBuilder<TServiceType>), new ServiceModuleBuilder<TServiceType>(moduleTypes.ToArray()));
+            _services.AddSingleton(typeof(IServiceModuleBuilder<TService>), new ServiceModuleBuilder<TService>(moduleTypes.ToArray()));
 
             switch (lifetime)
             {
                 case ServiceLifetime.Singleton:
-                    _services.AddSingleton<TServiceType>();
-                    _services.AddSingleton<IModularService<TServiceType>, ModularService<TServiceType>>();
+                    _services.AddSingleton<TService>();
+                    _services.AddSingleton<IModularService<TService>, ModularService<TService>>();
                     break;
                 case ServiceLifetime.Transient:
-                    _services.AddTransient<TServiceType>();
-                    _services.AddTransient<IModularService<TServiceType>, ModularService<TServiceType>>();
+                    _services.AddTransient<TService>();
+                    _services.AddTransient<IModularService<TService>, ModularService<TService>>();
                     break;
                 case ServiceLifetime.Scoped:
-                    _services.AddScoped<TServiceType>();
-                    _services.AddScoped<IModularService<TServiceType>, ModularService<TServiceType>>();
+                    _services.AddScoped<TService>();
+                    _services.AddScoped<IModularService<TService>, ModularService<TService>>();
                     break;               
             }
+
+            return this;
         }
 
         private Type LoadType<TService>(Assembly assenmbly, string typename)

@@ -10,8 +10,6 @@ namespace KoeLib.DllModule.Settings
         public string Typename { get; set; }
         public string Namespace { get; set; }
 
-        public ServiceLifetime? Lifetime { get; set; }
-
         public ServiceModuleSettings[] Modules { get; set; } = new ServiceModuleSettings[0];
         
     }

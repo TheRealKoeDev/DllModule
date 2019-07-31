@@ -4,15 +4,15 @@ using System;
 
 namespace DllTestModule
 {
-    public class Test : IModule<TestSingleton>
+    public class Test : IModule<TestService>
     {
-        TestSingleton _module;
+        TestService _module;
         public Test()
         {
 
         }
 
-        public void Initialize(TestSingleton module)
+        public void Initialize(TestService module)
         {
             _module = module;
             _module.InitializedAt = DateTime.Now;
