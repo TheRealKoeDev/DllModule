@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using DllModuleTestApiLibrary;
-using KoeLib.DllModule.Configuration;
+using KoeLib.DllModule;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 
@@ -10,7 +10,7 @@ namespace DllModuleTestApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        public ValuesController(IConfiguration config, IModularService<TestSubService> module)
+        public ValuesController(IConfiguration config, IModularService<ITestServiceInterface> module)
         {
 
         }

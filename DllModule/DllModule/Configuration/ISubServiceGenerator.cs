@@ -7,7 +7,7 @@ namespace KoeLib.DllModule.Configuration
 {
     public interface ISubServiceGenerator<TService>
     {
-        ISubServiceGenerator<TService> AddSubService<TSubService>(Expression<Func<TService, TSubService>> subServiceSelector)
+        ISubServiceGenerator<TService> AddSubService<TSubService>(Func<TService, TSubService> subServiceSelector)
             where TSubService: class;
     }
 }

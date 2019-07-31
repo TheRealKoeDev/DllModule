@@ -1,9 +1,7 @@
-﻿using Microsoft.Extensions.Configuration;
-using System;
-using System.Collections.Generic;
-using System.Text;
+﻿
+using KoeLib.DllModule.Configuration.Dependencies;
 
-namespace KoeLib.DllModule.Configuration.Implementations
+namespace KoeLib.DllModule.Configuration.Implementations.Services
 {
     internal class ModularService<TService> : IModularService<TService>
         where TService : class

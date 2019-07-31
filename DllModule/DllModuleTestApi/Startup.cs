@@ -1,23 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using DllModuleTestApiLibrary;
-using KoeLib.DllModule;
+﻿using DllModuleTestApiLibrary;
 using KoeLib.DllModule.Configuration;
-using KoeLib.DllModule.Settings;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
 
 namespace DllModuleTestApi
-{  
-
+{
     public class Startup
     {
         public IConfiguration Configuration { get; }
@@ -29,15 +19,17 @@ namespace DllModuleTestApi
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
-            services.AddModularServices(Configuration, "KoeLib:ModularServices", serviceGenerator => 
+        {           
+            services.AddModularServices(Configuration, "KoeLib:ModularServices", subServiceGenerator =>
             {
-                serviceGenerator.AddScopedModularService<TestService>( subGen => 
-                {
-                    subGen.AddSubService(ser => ser.SubService);
-                });
+                subServiceGenerator.AddTransient(typeof(ITestServiceInterface), typeof(TestService));
+
+                //subServiceGenerator.AddScoped<ITestServiceInterface, TestService>(subServiceSelector =>
+                //{
+                //    subServiceSelector.AddSubService(ser => ser.SubService);
+                //});
             });
-               
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
@@ -46,7 +38,7 @@ namespace DllModuleTestApi
         {            
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+               app.UseDeveloperExceptionPage();
             }
             else
             {

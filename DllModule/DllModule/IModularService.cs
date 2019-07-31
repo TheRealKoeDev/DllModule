@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace KoeLib.DllModule.Configuration
+﻿
+namespace KoeLib.DllModule
 {
     public interface IModularService<TService>
         where TService: class

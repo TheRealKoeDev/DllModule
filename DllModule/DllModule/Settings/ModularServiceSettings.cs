@@ -1,8 +1,4 @@
-﻿using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
+﻿
 namespace KoeLib.DllModule.Settings
 {
     public class ModularServiceSettings

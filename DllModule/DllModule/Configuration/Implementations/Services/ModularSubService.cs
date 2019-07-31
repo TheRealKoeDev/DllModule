@@ -1,8 +1,9 @@
-﻿using System;
+﻿using KoeLib.DllModule.Configuration.Dependencies;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace KoeLib.DllModule.Configuration.Implementations
+namespace KoeLib.DllModule.Configuration.Implementations.Services
 {
     internal class ModularSubService<TService, TSubService> : IModularService<TSubService>
         where TService : class

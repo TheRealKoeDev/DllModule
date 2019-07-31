@@ -1,8 +1,10 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using KoeLib.DllModule.Configuration.Dependencies;
+using KoeLib.DllModule.Configuration.Implementations.Services;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Linq.Expressions;
 
-namespace KoeLib.DllModule.Configuration.Implementations
+namespace KoeLib.DllModule.Configuration.Implementations.Generators
 {
     internal class ModularServiceGenerator<TService>: ISubServiceGenerator<TService>
         where TService: class
@@ -16,7 +18,7 @@ namespace KoeLib.DllModule.Configuration.Implementations
             _serviceLifetime = serviceLifetime;
         }
 
-        public ISubServiceGenerator<TService> AddSubService<TSubService>(Expression<Func<TService, TSubService>> subServiceSelector) 
+        public ISubServiceGenerator<TService> AddSubService<TSubService>(Func<TService, TSubService> subServiceSelector) 
             where TSubService : class
         {
             if (subServiceSelector == null)

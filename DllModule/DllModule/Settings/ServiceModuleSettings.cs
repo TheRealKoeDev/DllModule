@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace KoeLib.DllModule.Settings
+﻿namespace KoeLib.DllModule.Settings
 {
     public class ServiceModuleSettings
     {
         public bool IsRequired { get; set; } = true;
+        public bool Ignore { get; set; } = false;
 
         public string DllPath { get; set; }
         public PathType? PathType { get; set; }
