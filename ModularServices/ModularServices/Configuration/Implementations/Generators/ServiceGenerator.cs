@@ -238,7 +238,7 @@ namespace KoeLib.ModularServices.Configuration.Implementations.Generators
             ModularServiceSettings settings = _settings.FirstOrDefault(sett => sett.Typename == serviceType.Name && sett.Namespace == serviceType.Namespace);
             if (settings == null)
             {
-                throw new ConfigurationErrorsException("Modular service settings not found.");
+                throw new InvalidDataException("Modular service settings not found.");
             }
 
             HashSet<Type> moduleTypes = new HashSet<Type>();

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using TestLibrary;
+﻿using TestLibrary;
 using KoeLib.ModularServices;
 using Microsoft.AspNetCore.Mvc;
 
