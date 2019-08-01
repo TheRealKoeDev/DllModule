@@ -1,7 +1,7 @@
 # Modular-Services
 This Library allows you to bind classes, that implement a provided interface, from Dlls to Services in .NetCore by notating the dll/class in the configuration of your Project, without to recompile your application .
 
-Inspired by the concept of more Extensible Applications by Miguel Castro https://www.youtube.com/watch?v=jy-ZV7uEm7g
+Inspired by the concept of more extensible Applications by Miguel Castro https://www.youtube.com/watch?v=jy-ZV7uEm7g
 
 ## Usage Example
 
