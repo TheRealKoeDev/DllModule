@@ -79,10 +79,7 @@ public class TestController : ControllerBase
 {
     private readonly TestService Service;
     
-    //public TestController(TestService Service)
-    //{
-    //} 
-    //
+    //public TestController(TestService Service){} 
     //also works, but Modules are not called in this case.
     public TestController(IModularService<TestService> modularService)
     {
