@@ -18,7 +18,7 @@ public void ConfigureServices(IServiceCollection services)
 {
     services.AddModularServices(Configuration, "KoeLib:ModularServices", serviceGenerator =>
     {
-        serviceGenerator.AddSingleton<TestService>();
+        serviceGenerator.AddScoped<TestService>();
     });
 }        
 ````
