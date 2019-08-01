@@ -1,4 +1,5 @@
 ﻿using KoeLib.ModularServices.Configuration.Dependencies;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Diagnostics;
 

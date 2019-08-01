@@ -8,19 +8,17 @@ namespace TestApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        IModularService<ITestServiceInterface> Service;
+        ITestServiceInterface Service;
 
-        public ValuesController(IModularService<ITestServiceInterface> service)
+        public ValuesController(IModularService<ITestServiceInterface> modularService)
         {
-            Service = service;
+            Service = modularService.Service;
         }
 
         // GET api/values
         [HttpGet]
-        public ActionResult<string> Get()
-        {
-            return Service.Service.CreatedAt.ToString("HH:mm:ss");
-        }
+        public ITestServiceInterface Get()
+            => Service;
 
         // GET api/values/5
         [HttpGet("{id}")]

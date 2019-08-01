@@ -19,10 +19,9 @@ namespace KoeLib.ModularServices.Configuration.Implementations.Generators
         {
             foreach (Type type in _types)
             {
-                IModule<TService> module = Activator.CreateInstance(type) as IModule<TService>;
-                if (module == null)
+                if (!(Activator.CreateInstance(type) is IModule<TService> module))
                 {
-                    throw new TypeInitializationException(typeof(IModule<TService>).FullName, null);
+                    throw new TypeInitializationException(type.FullName, null);
                 }
 
                 yield return module;

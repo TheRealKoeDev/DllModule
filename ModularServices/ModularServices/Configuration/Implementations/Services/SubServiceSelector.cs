@@ -19,8 +19,7 @@ namespace KoeLib.ModularServices.Configuration.Implementations.Services
             Args.ThrowExceptionIfNull(selector, nameof(selector));
             _selector = selector;
 
-        }
-        
+        }        
 
         public TSubService Select(TService service)
             => _selector(service);

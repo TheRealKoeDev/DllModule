@@ -26,7 +26,7 @@ namespace KoeLib.ModularServices.Configuration.Implementations.Generators
         {
             if (subServiceSelector == null)
             {
-                throw new ArgumentException($"{nameof(Expression)} of {nameof(subServiceSelector)} is null.", nameof(subServiceSelector));
+                throw new ArgumentException($"Service to Subservice converter is null.", nameof(subServiceSelector));
             }
             _services.AddSingleton<ISubServiceSelector<TService, TSubService>>(new SubServiceSelector<TService, TSubService>(subServiceSelector));
 

@@ -22,12 +22,10 @@ namespace TestApi
         {
             services.AddModularServices(Configuration, "KoeLib:ModularServices", subServiceGenerator =>
             {
-                subServiceGenerator.AddTransient(typeof(ITestServiceInterface), typeof(TestService));
-
-                //subServiceGenerator.AddScoped<ITestServiceInterface, TestService>(subServiceSelector =>
-                //{
-                //    subServiceSelector.AddSubService(ser => ser.SubService);
-                //});
+                subServiceGenerator.AddScoped<ITestServiceInterface, TestService>(sub => 
+                {
+                    sub.AddSubService(ser => ser.SubService);
+                });
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);

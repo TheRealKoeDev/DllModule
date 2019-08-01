@@ -266,8 +266,5 @@ namespace KoeLib.ModularServices.Configuration.Implementations.Generators
             }
             return moduleTypes;
         }
-
-       
-        
     }
 }
