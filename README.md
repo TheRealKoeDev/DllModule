@@ -7,6 +7,13 @@ This Library allows you to bind classes, that implement a provided interface, fr
 ````csharp
 //TestLibrary.TestService can use Dependencyinjection
 
+public IConfiguration Configuration { get; }
+
+public Startup(IConfiguration configuration)
+{
+    Configuration = configuration;            
+}
+        
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddModularServices(Configuration, "KoeLib:ModularServices", serviceGenerator =>
