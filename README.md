@@ -61,6 +61,7 @@ namespace TestModule
   {
       TestService _service;
 
+      //Inherited from IModule<TestService>
       public void Initialize(TestService service)
       {
           _service = service;
