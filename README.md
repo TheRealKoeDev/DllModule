@@ -5,7 +5,7 @@ Inspired by the concept of more extensible Applications by Miguel Castro
 https://www.youtube.com/watch?v=jy-ZV7uEm7g  
 https://www.pluralsight.com/courses/developing-extensible-software  
 
-Namespace: KoeLib.ModularServices
+#### Namespace: KoeLib.ModularServices
 * Configuration: KoeLib.ModularServices.Configuration
 * AppSettings: KoeLib.ModularServices.Settings
 
