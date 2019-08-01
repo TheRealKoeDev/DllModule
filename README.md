@@ -30,7 +30,7 @@ public void ConfigureServices(IServiceCollection services)
     "ModularServices": [
       {
         "Typename": "TestService",
-        "NameSpace": "TestLibrary",
+        "Namespace": "TestLibrary",
         "Modules": [
           {
             "DllPath": "TestModules/TestModule.dll",
