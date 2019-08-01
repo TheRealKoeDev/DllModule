@@ -5,6 +5,8 @@ This Library allows you to bind classes, that implement a provided interface, fr
 
 ### Startup.cs
 ````csharp
+//TestLibrary.TestService can use Dependencyinjection
+
 public void ConfigureServices(IServiceCollection services)
 {
     services.AddModularServices(Configuration, "KoeLib:ModularServices", serviceGenerator =>
@@ -70,7 +72,8 @@ public class TestController : ControllerBase
     private readonly TestService Service;
     
     //public ValuesController(TestService Service){} also works,
-    //but Modules are not called in this case, except if u use AddSingleton because the ServiceModules are called once anyway.   
+    //but Modules are not called in this case, 
+    //except if u use AddSingleton because Singletons are called once anyway.   
     public ValuesController(IModularService<TestService> modularService)
     {
         Service = modularService.Service;
