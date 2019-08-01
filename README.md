@@ -5,6 +5,11 @@ Inspired by the concept of more extensible Applications by Miguel Castro
 https://www.youtube.com/watch?v=jy-ZV7uEm7g  
 https://www.pluralsight.com/courses/developing-extensible-software  
 
+#### NuGet
+````
+Install-Package Modular-Services
+````
+
 ## Usage Example
 
 ### Startup.cs
