@@ -56,7 +56,7 @@ using KoeLib.ModularServices;
 
 namespace TestModule
 {
-  //Needs a Default Constructor to work
+  //Needs a Default Constructor to work.
   public class Module : IModule<TestService>
   {
       TestService _service;
@@ -79,9 +79,11 @@ public class TestController : ControllerBase
 {
     private readonly TestService Service;
     
-    //public ValuesController(TestService Service){} also works,
-    //but Modules are not called in this case, 
-    //except if u use AddSingleton because Singletons are called once anyway.   
+    //public ValuesController(TestService Service)
+    //{
+    //} 
+    //
+    //also works, but Modules are not called in this case.
     public ValuesController(IModularService<TestService> modularService)
     {
         Service = modularService.Service;
