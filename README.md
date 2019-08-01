@@ -38,7 +38,7 @@ public void ConfigureServices(IServiceCollection services)
             "FullNameOfType": "TestModule.Module",
             
             "IsRequired" : true, //Optional, default value is true
-            "Ignore": false      //Optional, default value false
+            "Ignore": false      //Optional, default value is false
           }
         ]
       }
