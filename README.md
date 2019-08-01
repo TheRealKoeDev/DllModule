@@ -1,3 +1,83 @@
 # Modular-Services
 This Library allows you to bind classes, that implement a provided interface, from Dlls to Services in .NetCore by notating the dll/class in the configuration of your Project, without to recompile your application .
 
+## Usage Example
+
+### Startup.cs
+````csharp
+public void ConfigureServices(IServiceCollection services)
+{
+    services.AddModularServices(Configuration, "KoeLib:ModularServices", serviceGenerator =>
+    {
+        serviceGenerator.AddSingleton<TestService>();
+    });
+}        
+````
+
+### appsettings.json
+````javascript
+{
+  "KoeLib": {
+    "ModularServices": [
+      {
+        "Typename": "TestService",
+        "NameSpace": "TestLibrary",
+        "Modules": [
+          {
+            "DllPath": "TestModules/TestModule.dll",
+            "PathType": "Relative",
+            "FullNameOfType": "TestModule.Module",
+            
+            "IsRequired" : true, //Optional, default value is true
+            "Ignore": false      //Optional, default value false
+          }
+        ]
+      }
+    ]
+  }
+} 
+````
+
+### TestModule.dll
+````csharp
+//Location: <AppPath>/TestModules
+
+using TestLibrary;
+using KoeLib.ModularServices;
+
+namespace TestModule
+{
+  //Needs a Default Constructor to work
+  public class Module : IModule<TestService>
+  {
+      TestService _service;
+
+      public void Initialize(TestService service)
+      {
+          _service = service;
+          //Do stuff
+      }
+  }
+}
+````
+
+### TestController.cs
+````csharp
+[Route("api/[controller]")]
+[ApiController]
+public class TestController : ControllerBase
+{
+    private readonly TestService Service;
+    
+    //public ValuesController(TestService Service){} also works,
+    //but Modules are not called in this case, except if u use AddSingleton because the ServiceModules are called once anyway.   
+    public ValuesController(IModularService<TestService> modularService)
+    {
+        Service = modularService.Service;
+    }
+    
+    .
+    .
+    .
+}
+````
