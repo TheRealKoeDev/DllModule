@@ -1,9 +1,7 @@
 ﻿using KoeLib.ModularServices;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace KoeLib.ModularService.Configuration
+namespace KoeLib.ModularServices.Configuration
 {
     public interface IModuleExceptionHandler<TService>
         where TService: class

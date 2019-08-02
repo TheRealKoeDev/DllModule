@@ -1,6 +1,6 @@
 ﻿
-using KoeLib.ModularService.Configuration;
-using KoeLib.ModularService.Configuration.Implementations.ExceptionHandlers;
+using KoeLib.ModularServices.Configuration;
+using KoeLib.ModularServices.Configuration.Implementations.ExceptionHandlers;
 using KoeLib.ModularServices.Configuration.Dependencies;
 using KoeLib.ModularServices.Settings;
 using KoeLib.ModularServices.Tools;

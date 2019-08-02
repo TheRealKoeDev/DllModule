@@ -1,9 +1,10 @@
-﻿using KoeLib.ModularServices;
+﻿using KoeLib.ModularServices.Configuration;
+using KoeLib.ModularServices.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace KoeLib.ModularService.Configuration.Implementations.ExceptionHandlers
+namespace KoeLib.ModularServices.Configuration.Implementations.ExceptionHandlers
 {
     internal class ContinueModuleExceptionHandler<TService> : IModuleExceptionHandler<TService>
         where TService : class

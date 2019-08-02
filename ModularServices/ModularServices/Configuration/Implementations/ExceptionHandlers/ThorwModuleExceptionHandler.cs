@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace KoeLib.ModularService.Configuration.Implementations.ExceptionHandlers
+namespace KoeLib.ModularServices.Configuration.Implementations.ExceptionHandlers
 {
     internal class ThorwModuleExceptionHandler<TService> : IModuleExceptionHandler<TService>
         where TService : class

@@ -14,7 +14,6 @@ namespace TestModule
 
         public void Initialize(ITestServiceInterface module)
         {
-            throw new Exception();
             _module = module;
             _module.InitializedAt = DateTime.Now;
         }

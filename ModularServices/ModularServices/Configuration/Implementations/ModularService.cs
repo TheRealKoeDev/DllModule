@@ -1,8 +1,7 @@
 ﻿
-using KoeLib.ModularService.Configuration;
+using KoeLib.ModularServices.Configuration;
 using KoeLib.ModularServices.Configuration.Dependencies;
 using System;
-using System.Diagnostics;
 
 namespace KoeLib.ModularServices.Configuration.Implementations
 {
@@ -11,7 +10,7 @@ namespace KoeLib.ModularServices.Configuration.Implementations
     internal class ModularService<TService> : IModularService<TService>
         where TService : class
     {
-        public TService Service { get; protected set; }
+        public TService Service { get; }
 
         internal ModularService(TService instance)
         {

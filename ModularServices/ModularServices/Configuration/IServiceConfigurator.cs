@@ -1,4 +1,4 @@
-﻿using KoeLib.ModularService.Configuration;
+﻿using KoeLib.ModularServices.Configuration;
 
 namespace KoeLib.ModularServices.Configuration
 {

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace KoeLib.ModularService.Configuration
+namespace KoeLib.ModularServices.Configuration
 {
     public enum ModuleExceptionLocation
     {
