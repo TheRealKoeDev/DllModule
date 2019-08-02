@@ -18,7 +18,7 @@ Install-Package Modular-Services
 
 #### Startup.cs
 ````csharp
-//TestLibrary.TestService can use Dependencyinjection
+//TestService and TestHandler can use Dependencyinjection
 
 public IConfiguration Configuration { get; }
 
