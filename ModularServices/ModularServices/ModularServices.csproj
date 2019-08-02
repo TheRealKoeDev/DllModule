@@ -3,7 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>KoeLib.ModularService</RootNamespace>
-    <Version>1.0.0</Version>
+    <Version>1.1.0</Version>
     <Company>-</Company>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>MIT</Copyright>
@@ -13,6 +13,8 @@
     <PackageTags>modules csharp dotnet-core dotnetcore services dll dllimport dlls</PackageTags>
     <Description>This Library allows you to bind classes, that implement a provided interface, from Dlls to Services in .NetCore by notating the dll/class in the configuration of your Project, without to recompile your application .</Description>
     <Authors>Sebastian Körner (KoeDev)</Authors>
+    <PackageId>Modular-Services</PackageId>
+    <Product>Modular-Services</Product>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">

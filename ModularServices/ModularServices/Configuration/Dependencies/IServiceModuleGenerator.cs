@@ -3,9 +3,9 @@ using System.Collections.Generic;
 
 namespace KoeLib.ModularServices.Configuration.Dependencies
 {
-    public interface IServiceModuleBuilder<TService>
+    public interface IServiceModuleContainer<TService>
         where TService: class
     {
-        IEnumerable<IModule<TService>> Build();
+        IEnumerable<Func<IModule<TService>>> Constructors { get; }
     }
 }

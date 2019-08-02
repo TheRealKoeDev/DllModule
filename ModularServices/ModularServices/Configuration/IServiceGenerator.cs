@@ -1,7 +1,4 @@
-﻿using KoeLib.ModularServices.Configuration.Dependencies;
-using Microsoft.Extensions.DependencyInjection;
-using System;
-using System.Diagnostics;
+﻿using System;
 
 namespace KoeLib.ModularServices.Configuration
 {
@@ -9,26 +6,26 @@ namespace KoeLib.ModularServices.Configuration
     {
         IServiceGenerator AddSingleton(Type serviceType);
         IServiceGenerator AddSingleton(Type serviceType, Type implementationType);
-        IServiceGenerator AddSingleton<TService>(Action<ISubServiceGenerator<TService>> subServiceGeneratorAction = null)
+        IServiceGenerator AddSingleton<TService>(Action<IServiceConfigurator<TService>> serviceConfigurationAction = null)
             where TService : class;
 
-        IServiceGenerator AddSingleton<TService, TServiceImplementation>(Action<ISubServiceGenerator<TService>> subServiceGeneratorAction = null)
+        IServiceGenerator AddSingleton<TService, TServiceImplementation>(Action<IServiceConfigurator<TService>> serviceConfigurationAction = null)
             where TService : class
             where TServiceImplementation : class, TService;
 
         IServiceGenerator AddScoped(Type serviceType);
         IServiceGenerator AddScoped(Type serviceType, Type implementationType);
-        IServiceGenerator AddScoped<TService>(Action<ISubServiceGenerator<TService>> subServiceGeneratorAction = null)
+        IServiceGenerator AddScoped<TService>(Action<IServiceConfigurator<TService>> subServiceGeneratorAction = null)
             where TService : class;
-        IServiceGenerator AddScoped<TService, TServiceImplementation>(Action<ISubServiceGenerator<TService>> subServiceGeneratorAction = null)
+        IServiceGenerator AddScoped<TService, TServiceImplementation>(Action<IServiceConfigurator<TService>> serviceConfigurationAction = null)
             where TService : class
             where TServiceImplementation : class, TService;
 
         IServiceGenerator AddTransient(Type serviceType);
         IServiceGenerator AddTransient(Type serviceType, Type implementationType);
-        IServiceGenerator AddTransient<TService>(Action<ISubServiceGenerator<TService>> subServiceGeneratorAction = null)
+        IServiceGenerator AddTransient<TService>(Action<IServiceConfigurator<TService>> subServiceGeneratorAction = null)
             where TService : class;
-        IServiceGenerator AddTransient<TService, TServiceImplementation>(Action<ISubServiceGenerator<TService>> subServiceGeneratorAction = null)
+        IServiceGenerator AddTransient<TService, TServiceImplementation>(Action<IServiceConfigurator<TService>> serviceConfigurationAction = null)
             where TService : class
             where TServiceImplementation : class, TService;
     }

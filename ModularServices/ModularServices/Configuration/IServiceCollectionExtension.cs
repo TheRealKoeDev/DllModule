@@ -1,4 +1,4 @@
-﻿using KoeLib.ModularServices.Configuration.Implementations.Generators;
+﻿using KoeLib.ModularServices.Configuration.Implementations;
 using KoeLib.ModularServices.Settings;
 using KoeLib.ModularServices.Tools;
 using Microsoft.Extensions.Configuration;
@@ -10,7 +10,7 @@ using System.Diagnostics;
 namespace KoeLib.ModularServices.Configuration
 {
 
-    [DebuggerStepThrough]
+    //[DebuggerStepThrough]
     public static class IServiceCollectionExtension
     {
         public static IServiceCollection AddModularServices(this IServiceCollection services, IConfiguration configuration, IEnumerable<ModularServiceSettings> serviceSettings, Action<IServiceGenerator> generateServiceAction)

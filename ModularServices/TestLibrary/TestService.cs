@@ -7,7 +7,6 @@ namespace TestLibrary
     {
         public TestService(IConfiguration services)
         {
-           
         }
 
         public DateTime CreatedAt { get; } = DateTime.Now;

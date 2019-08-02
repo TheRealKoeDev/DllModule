@@ -5,9 +5,21 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using KoeLib.ModularService.Configuration;
+using KoeLib.ModularServices;
+using System;
+using System.Diagnostics;
 
 namespace TestApi
 {
+    public class TestHandler : IModuleExceptionHandler<ITestServiceInterface>
+    {
+        public OnModuleExceptionAction Handle(Exception e, ITestServiceInterface service, IModule<ITestServiceInterface> module, ModuleExceptionLocation location)
+        {
+            return OnModuleExceptionAction.Continue;
+        }
+    }
+
     public class Startup
     {
         public IConfiguration Configuration { get; }
@@ -20,11 +32,10 @@ namespace TestApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddModularServices(Configuration, "KoeLib:ModularServices", subServiceGenerator =>
+            services.AddModularServices(Configuration, "KoeLib:ModularServices", serviceGenerator =>
             {
-                subServiceGenerator.AddScoped<ITestServiceInterface, TestService>(sub => 
-                {
-                    sub.AddSubService(ser => ser.SubService);
+                serviceGenerator.AddScoped<ITestServiceInterface, TestService>(conf => {
+                    conf.AddExceptionHandler<TestHandler>();
                 });
             });
 
