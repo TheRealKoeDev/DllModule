@@ -1,13 +1,22 @@
 # Modular-Services
-This Library allows you to bind classes, that implement a provided interface, from Dlls to Services in .NetCore by notating the dll/class in the configuration of your Project, without to recompile your application .
+This Library allows you to bind classes, that implement a provided interface, from Dlls to Services in .NetCore by notating the dll/class in the configuration of your Project, without to recompile your application.
 
 Inspired by the concept of more extensible Applications by Miguel Castro  
 https://www.youtube.com/watch?v=jy-ZV7uEm7g  
 https://www.pluralsight.com/courses/developing-extensible-software  
 
+#### Namespace: KoeLib.ModularServices
+* Configuration: KoeLib.ModularServices.Configuration
+* AppSettings: KoeLib.ModularServices.Settings
+
+#### NuGet
+````
+Install-Package Modular-Services
+````
+
 ## Usage Example
 
-### Startup.cs
+#### Startup.cs
 ````csharp
 //TestLibrary.TestService can use Dependencyinjection
 
@@ -27,7 +36,7 @@ public void ConfigureServices(IServiceCollection services)
 }        
 ````
 
-### appsettings.json
+#### appsettings.json
 ````javascript
 {
   "KoeLib": {
@@ -51,7 +60,7 @@ public void ConfigureServices(IServiceCollection services)
 } 
 ````
 
-### TestModule.dll
+#### TestModule.dll
 ````csharp
 //Location: <AppPath>/TestModules
 
@@ -75,7 +84,7 @@ namespace TestModule
 }
 ````
 
-### TestController.cs
+#### TestController.cs
 ````csharp
 [Route("api/[controller]")]
 [ApiController]
