@@ -18,7 +18,7 @@ Install-Package Modular-Services
 
 #### Startup.cs
 ````csharp
-//TestLibrary.TestService can use Dependencyinjection
+//TestService and TestHandler can use Dependencyinjection
 
 public IConfiguration Configuration { get; }
 
@@ -31,9 +31,11 @@ public void ConfigureServices(IServiceCollection services)
 {
     services.AddModularServices(Configuration, "KoeLib:ModularServices", serviceGenerator =>
     {
-        serviceGenerator.AddScoped<TestService>();
+        serviceGenerator.AddScoped<TestService>(conf => {
+            conf.SetExceptionHandler<TestHandler>();
+        });
     });
-}        
+}      
 ````
 
 #### appsettings.json
@@ -44,6 +46,8 @@ public void ConfigureServices(IServiceCollection services)
       {
         "Typename": "TestService",
         "Namespace": "TestLibrary",
+        "OnModuleExceptionAction": "Continue",  //Optional, default value is Throw
+                                                //Is ignored if a custom ExceptionHandler is set
         "Modules": [
           {
             "DllPath": "TestModules/TestModule.dll",
