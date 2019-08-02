@@ -35,7 +35,7 @@ namespace TestApi
             services.AddModularServices(Configuration, "KoeLib:ModularServices", serviceGenerator =>
             {
                 serviceGenerator.AddScoped<ITestServiceInterface, TestService>(conf => {
-                    conf.AddExceptionHandler<TestHandler>();
+                    conf.SetExceptionHandler<TestHandler>();
                 });
             });
 

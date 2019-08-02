@@ -16,7 +16,7 @@ namespace KoeLib.ModularServices.Configuration.Implementations
             _services = services;
         }
 
-        IServiceConfigurator<TService> IServiceConfigurator<TService>.AddExceptionHandler<TExceptionHandler>()
+        IServiceConfigurator<TService> IServiceConfigurator<TService>.SetExceptionHandler<TExceptionHandler>()
         {
             _services.AddTransient<IModuleExceptionHandler<TService>, TExceptionHandler>();
             return this;
