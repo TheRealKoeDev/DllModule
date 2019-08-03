@@ -54,8 +54,8 @@ public void ConfigureServices(IServiceCollection services)
 
               //Actions are optional and have priority over the set handler
               "OnConfigApplyExceptionAction": "Continue", 
-              "OnConstructorExceptionAction": "Continue",
-              "OnInitializeExceptionAction": "Continue"
+              "OnConstructorExceptionAction": "Stop",
+              "OnInitializeExceptionAction": "Throw"
             }
         ]
     }
