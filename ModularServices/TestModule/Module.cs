@@ -4,18 +4,18 @@ using System;
 
 namespace TestModule
 {
-    public class Module : IModule<ITestServiceInterface>
+    public class Module : IModule<TestService>
     {
         private int _test = 888;
-        ITestServiceInterface _module;
-        public Module()
-        {
-        }
 
-        public void Initialize(ITestServiceInterface module)
+        public Module()
+        {            
+            _test = 999;
+        }
+        
+        public void Initialize(TestService module)
         {
-            _module = module;
-            _module.InitializedAt = DateTime.Now;
+            module.Count++;
         }
     }
 }

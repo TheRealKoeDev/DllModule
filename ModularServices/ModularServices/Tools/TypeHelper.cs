@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Reflection;
@@ -6,7 +7,7 @@ using System.Runtime.CompilerServices;
 
 namespace KoeLib.ModularServices.Tools
 {
-    //[DebuggerStepThrough]
+    [DebuggerStepThrough]
     internal static class TypeHelper
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
@@ -15,15 +16,15 @@ namespace KoeLib.ModularServices.Tools
             Type type = LoadAssembly(assemblyFullPath).GetType(typeFullName);
             if (type == null)
             {
-                throw new TypeLoadException($"Type {typeFullName} could not be found.");
+                throw new TypeLoadException($"{typeFullName} could not be found.");
             }
             else if (!ContainsInterface(type, moduleType))
             {
-                throw new TypeLoadException($"The {moduleType.FullName} is no instance of {moduleType.FullName}.");
+                throw new TypeLoadException($"{type.FullName} is no instance of {moduleType.FullName}.");
             }
             else if (!HasDefaultConstructor(type))
             {
-                throw new TypeLoadException($"The type {typeFullName} does not have a default constructor.");
+                throw new TypeLoadException($"{typeFullName} does not have a default constructor.");
             }
 
             return type;
@@ -34,7 +35,7 @@ namespace KoeLib.ModularServices.Tools
         {
             if (!service.IsClass)
             {
-                throw new ArgumentException("Service is not a class.");
+                throw new ArgumentException($"{service.FullName} is not a class.");
             }
         }
 
@@ -68,11 +69,11 @@ namespace KoeLib.ModularServices.Tools
         {
             if (!File.Exists(dllPath))
             {
-                throw new FileNotFoundException("Assembly not found.", dllPath);
+                throw new FileNotFoundException($"Assembly at {dllPath} does not exist.", dllPath);
             }
             else if (!dllPath.EndsWith(".dll", StringComparison.InvariantCultureIgnoreCase))
             {
-                throw new FileLoadException("File is no Assembly.", dllPath);
+                throw new FileLoadException($"File at {dllPath} is no dll file.", dllPath);
             }
             return Assembly.LoadFrom(dllPath);
         }

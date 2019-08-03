@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace KoeLib.ModularServices.Configuration
+namespace KoeLib.ModularServices.Settings
 {
     /// <summary>
     /// Specifies what to do if a Module throws a Exception.
     /// </summary>
-    public enum OnModuleExceptionAction
+    public enum OnExceptionAction
     {
         /// <summary>
-        /// Stops to initialize other Modules.
+        /// Stops to proceed.
         /// </summary>
         Stop,
 
         /// <summary>
-        /// Continues to initialize other modules.
+        /// Continues to proceed.
         /// </summary>
         Continue,
 

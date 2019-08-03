@@ -1,39 +1,40 @@
-﻿
-using KoeLib.ModularServices.Configuration;
-using KoeLib.ModularServices.Configuration.Dependencies;
+﻿using KoeLib.ModularServices.Settings;
 using System;
+using System.Diagnostics;
+using System.Linq;
 
 namespace KoeLib.ModularServices.Configuration.Implementations
 {
-
-    //[DebuggerStepThrough]
+    [DebuggerStepThrough]
     internal class ModularService<TService> : IModularService<TService>
         where TService : class
     {
         public TService Service { get; }
-
+        
         internal ModularService(TService instance)
         {
             Service = instance;
         }
 
-        public ModularService(TService instance, IServiceModuleContainer<TService> moduleBuilder, IModuleExceptionHandler<TService> exceptionHandler) : this(instance)
+        public ModularService(TService instance, IServiceModuleContainer<TService> moduleBuilder, IServiceExceptionHandler<TService> exceptionHandler) : this(instance)
         {
-            foreach (Func<IModule<TService>> constructor in moduleBuilder.Constructors)
+            for (int i = 0; i < moduleBuilder.CallInformation.Count; i++)
             {
+                ServiceCallInfo<TService> callInfo = moduleBuilder.CallInformation.ElementAt(i);
                 IModule<TService> module = default;
 
                 try
                 {
-                    module = constructor();
+                    
+                    module = callInfo.Constructor();
                 }
                 catch(Exception e)
                 {
-                    switch (exceptionHandler.Handle(e, instance, module, ModuleExceptionLocation.Constructor))
+                    switch (callInfo?.OnConstructorExceptionAction ?? exceptionHandler.HandleModuleConstructorException(e, instance, i))
                     {
-                        case OnModuleExceptionAction.Continue: continue;
-                        case OnModuleExceptionAction.Stop: return;
-                        case OnModuleExceptionAction.Throw: throw;
+                        case OnExceptionAction.Continue: continue;
+                        case OnExceptionAction.Stop: return;
+                        case OnExceptionAction.Throw: throw;
                     }
                 }
 
@@ -43,11 +44,11 @@ namespace KoeLib.ModularServices.Configuration.Implementations
                 }
                 catch (Exception e)
                 {
-                    switch (exceptionHandler.Handle(e, instance, module, ModuleExceptionLocation.Initialization))
+                    switch (callInfo?.OnInitializeExceptionAction ?? exceptionHandler.HandleModuleInitializationException(e, instance, module, i))
                     {
-                        case OnModuleExceptionAction.Continue: continue;
-                        case OnModuleExceptionAction.Stop: return;
-                        case OnModuleExceptionAction.Throw: throw;
+                        case OnExceptionAction.Continue: continue;
+                        case OnExceptionAction.Stop: return;
+                        case OnExceptionAction.Throw: throw;
                     }
                 }
             }

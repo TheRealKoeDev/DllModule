@@ -6,6 +6,6 @@ namespace KoeLib.ModularServices.Configuration
         where TService: class
     {
         IServiceConfigurator<TService> SetExceptionHandler<TExceptionHandler>()
-            where TExceptionHandler : class, IModuleExceptionHandler<TService>;
+            where TExceptionHandler : class, IServiceExceptionHandler<TService>;
     }
 }

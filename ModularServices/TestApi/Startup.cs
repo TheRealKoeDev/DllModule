@@ -6,21 +6,24 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using KoeLib.ModularServices;
+using KoeLib.ModularServices.Settings;
 using System;
 
 namespace TestApi
 {
-    public class TestHandler : IModuleExceptionHandler<ITestServiceInterface>
+    public class TestHandler : IServiceExceptionHandler<TestService>
     {
-        public TestHandler(IConfiguration Configuration)
-        {
-         
-        }
+        public OnExceptionAction HandleConfigApplyException(Exception e, ServiceModuleSettings settings, int configIndex)
+            => OnExceptionAction.Throw;
 
-        public OnModuleExceptionAction Handle(Exception e, ITestServiceInterface service, IModule<ITestServiceInterface> module, ModuleExceptionLocation location)
-        {
-            return OnModuleExceptionAction.Throw;
-        }
+        public OnExceptionAction HandleConfigLoadException(Exception e)
+            => OnExceptionAction.Throw;
+
+        public OnExceptionAction HandleModuleConstructorException(Exception e, TestService service, int indexOfModule)
+            => OnExceptionAction.Throw;
+
+        public OnExceptionAction HandleModuleInitializationException(Exception e, TestService service, IModule<TestService> module, int indexOfModule)
+            => OnExceptionAction.Throw;
     }
 
     public class Startup
@@ -37,8 +40,8 @@ namespace TestApi
         {
             services.AddModularServices(Configuration, "KoeLib:ModularServices", serviceGenerator =>
             {
-                serviceGenerator.AddSingleton<ITestServiceInterface, TestService>(conf => {
-                    //conf.SetExceptionHandler<TestHandler>();
+                serviceGenerator.AddScoped<TestService, TestService>(conf => {
+                    conf.SetExceptionHandler<TestHandler>();
                 });
             });
 

@@ -5,14 +5,12 @@ namespace TestLibrary
 {
     public class TestService: ITestServiceInterface
     {
+        public int Count { get; set; }  
+
         public TestService(IConfiguration services)
         {
         }
 
-        public DateTime CreatedAt { get; } = DateTime.Now;
-        public DateTime InitializedAt { get; set; }
-
-        public TestSubService SubService { get; } = new TestSubService();
     }
 
     public class TestSubService
@@ -22,8 +20,9 @@ namespace TestLibrary
 
     public interface ITestServiceInterface
     {
-        DateTime CreatedAt { get; }
-        DateTime InitializedAt { get; set; }
-        TestSubService SubService { get; }
+        int Count { get; set; }
+        //DateTime CreatedAt { get; }
+        //DateTime InitializedAt { get; set; }
+        //TestSubService SubService { get; }
     }
 }

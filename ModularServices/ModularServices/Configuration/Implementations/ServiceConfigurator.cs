@@ -1,11 +1,12 @@
 ﻿using KoeLib.ModularServices.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
+using System.Diagnostics;
 
 namespace KoeLib.ModularServices.Configuration.Implementations
 {
 
-    //[DebuggerStepThrough]
+    [DebuggerStepThrough]
     internal class ServiceConfigurator<TService>: IServiceConfigurator<TService>
         where TService: class
     {
@@ -18,7 +19,7 @@ namespace KoeLib.ModularServices.Configuration.Implementations
 
         IServiceConfigurator<TService> IServiceConfigurator<TService>.SetExceptionHandler<TExceptionHandler>()
         {
-            _services.AddTransient<IModuleExceptionHandler<TService>, TExceptionHandler>();
+            _services.AddTransient<IServiceExceptionHandler<TService>, TExceptionHandler>();
             return this;
         }
     }

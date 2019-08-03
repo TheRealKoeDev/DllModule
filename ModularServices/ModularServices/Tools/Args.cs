@@ -4,7 +4,7 @@ using System.Runtime.CompilerServices;
 
 namespace KoeLib.ModularServices.Tools
 {
-    //[DebuggerStepThrough]
+    [DebuggerStepThrough]
     internal static class Args
     {
         [MethodImpl(MethodImplOptions.AggressiveInlining)]

@@ -8,17 +8,19 @@ namespace TestApi.Controllers
     [ApiController]
     public class ValuesController : ControllerBase
     {
-        ITestServiceInterface Service;
+        TestService Service;
 
-        public ValuesController(IModularService<ITestServiceInterface> modularService)
+        public ValuesController(IModularService<TestService> modularService)
         {
             Service = modularService.Service;
         }
 
         // GET api/values
         [HttpGet]
-        public ITestServiceInterface Get()
-            => Service;
+        public TestService Get()
+        {
+            return Service;
+        }
 
         // GET api/values/5
         [HttpGet("{id}")]

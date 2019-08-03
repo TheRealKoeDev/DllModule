@@ -1,31 +1,25 @@
-﻿
-using KoeLib.ModularServices.Configuration;
-using KoeLib.ModularServices.Configuration.Implementations.ExceptionHandlers;
-using KoeLib.ModularServices.Configuration.Dependencies;
+﻿using KoeLib.ModularServices.Configuration.Implementations.ExceptionHandlers;
 using KoeLib.ModularServices.Settings;
 using KoeLib.ModularServices.Tools;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
+using System.Diagnostics;
 
 namespace KoeLib.ModularServices.Configuration.Implementations
 {
 
-    //[DebuggerStepThrough]
+    [DebuggerStepThrough]
     internal class ServiceGenerator: IServiceGenerator
     {
         private readonly IConfiguration _configuration;
         private readonly IServiceCollection _services;
-        private readonly IEnumerable<ModularServiceSettings> _settings;
+        private readonly string _configPath;
 
-        public ServiceGenerator(IServiceCollection services, IConfiguration configuration, IEnumerable<ModularServiceSettings> settings)
+        public ServiceGenerator(IServiceCollection services, IConfiguration configuration, string configPath)
         {
             _services = services;
-            _settings = settings;
+            _configPath = configPath;
             _configuration = configuration;
         }
 
@@ -136,16 +130,12 @@ namespace KoeLib.ModularServices.Configuration.Implementations
         
         private IServiceGenerator AddModularService(Type service, ServiceLifetime lifetime, Type implementationType = null)
         {
-            ModularServiceSettings settings = _settings.FirstOrDefault(sett => sett != null && sett.Typename == service.Name && sett.Namespace == service.Namespace);
-            if (settings == null)
-            {
-                throw new InvalidDataException($"Modular service settings for {service.FullName} are missing or have a false format.");
-            }
+            typeof(OptionsConfigurationServiceCollectionExtensions)
+                .GetMethod("Configure", new Type[] { typeof(IServiceCollection), typeof(IConfiguration) })
+                .MakeGenericMethod(new Type[] { typeof(ModularServiceSettingsList<>).MakeGenericType(service) })
+                .Invoke(null, new object[] { _services, _configuration.GetSection(_configPath + ':' + service.FullName)});
 
-            IEnumerable<Type> moduleTypes = CreateServiceModuleTypes(typeof(IModule<>).MakeGenericType(service), settings);
-
-            object moduleBuilder = Activator.CreateInstance(typeof(ServiceModuleContainer<>).MakeGenericType(service), new object[] { moduleTypes.ToArray() });
-            _services.AddSingleton(typeof(IServiceModuleContainer<>).MakeGenericType(service), moduleBuilder);            
+            _services.AddSingleton(typeof(IServiceModuleContainer<>).MakeGenericType(service), typeof(ServiceModuleContainer<>).MakeGenericType(service));
 
             switch (lifetime)
             {
@@ -163,48 +153,8 @@ namespace KoeLib.ModularServices.Configuration.Implementations
                     break;
             }
 
-            switch (settings.OnModuleExceptionAction)
-            {
-                case OnModuleExceptionAction.Throw:
-                    _services.AddTransient(typeof(IModuleExceptionHandler<>).MakeGenericType(service), typeof(ThorwModuleExceptionHandler<>).MakeGenericType(service));
-                    break;
-                case OnModuleExceptionAction.Continue:
-                    _services.AddTransient(typeof(IModuleExceptionHandler<>).MakeGenericType(service), typeof(ContinueModuleExceptionHandler<>).MakeGenericType(service));
-                    break;
-                case OnModuleExceptionAction.Stop:
-                    _services.AddTransient(typeof(IModuleExceptionHandler<>).MakeGenericType(service), typeof(StopModuleExceptionHandler<>).MakeGenericType(service));
-                    break;
-            }
-
+            _services.AddTransient(typeof(IServiceExceptionHandler<>).MakeGenericType(service), typeof(ContinueExceptionHandler<>).MakeGenericType(service));
             return this;
-        }
-
-        private IEnumerable<Type> CreateServiceModuleTypes(Type moduleType, ModularServiceSettings settings)
-        {
-            HashSet<Type> moduleTypes = new HashSet<Type>();
-            string appRootPath = _configuration.GetValue<string>(WebHostDefaults.ContentRootKey);
-
-            foreach (ServiceModuleSettings module in settings.Modules ?? new ServiceModuleSettings[0])
-            {
-                if (module == null || module.Ignore)
-                {
-                    continue;
-                }
-
-                try
-                {
-                    string dllPath = module.PathType == PathType.Absolute ? module.DllPath : Path.Combine(appRootPath, module.DllPath);
-                    moduleTypes.Add(TypeHelper.LoadModuleTypeFromAssembly(dllPath, module.FullNameOfType, moduleType));
-                }
-                catch
-                {
-                    if (module.IsRequired)
-                    {
-                        throw;
-                    }
-                }
-            }
-            return moduleTypes;
         }
     }
 }
