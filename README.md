@@ -76,7 +76,7 @@ namespace TestModule
   //Needs a Default Constructor to work.
   public class Module : IModule<TestService>
   {
-      TestService _service;
+      private readonly TestService _service;
 
       //Inherited from IModule<TestService>
       public void Initialize(TestService service)
@@ -94,13 +94,13 @@ namespace TestModule
 [ApiController]
 public class TestController : ControllerBase
 {
-    private readonly TestService Service;
+    private readonly TestService _service;
     
     //public TestController(TestService Service){} 
     //also works, but Modules are not called in this case.
     public TestController(IModularService<TestService> modularService)
     {
-        Service = modularService.Service;
+        _service = modularService.Service;
     }
     
     .
