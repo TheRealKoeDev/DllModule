@@ -1,5 +1,5 @@
-# Modular-Services
-This Library allows you to bind classes, that implement a provided interface, from Dlls to Services in .NetCore by notating the dll/class in the configuration of your Project, without to recompile your application.
+# Modular-Services v2.0.0
+This Library allows you to bind classes, that implement a provided interface, from Dlls to Services in .NetCore by notating the dll/class in the configuration of your Project, without to recompile or restart your application.
 
 Inspired by the concept of more extensible Applications by Miguel Castro  
 https://www.youtube.com/watch?v=jy-ZV7uEm7g  
@@ -32,6 +32,7 @@ public void ConfigureServices(IServiceCollection services)
     services.AddModularServices(Configuration, "KoeLib:ModularServices", serviceGenerator =>
     {
         serviceGenerator.AddScoped<TestService>(conf => {
+            //The defaultbehavior, if no handler is set, is allways to continue.
             conf.SetExceptionHandler<TestHandler>();
         });
     });
@@ -42,32 +43,28 @@ public void ConfigureServices(IServiceCollection services)
 ````javascript
 {
   "KoeLib": {
-    "ModularServices": [
-      {
-        "Typename": "TestService",
-        "Namespace": "TestLibrary",
-        "OnModuleExceptionAction": "Continue",  //Optional, default value is Throw
-                                                //Is ignored if a custom ExceptionHandler is set
-        "Modules": [
-          {
-            "DllPath": "TestModules/TestModule.dll",
-            "PathType": "Relative",
-            "FullNameOfType": "TestModule.Module",
-            
-            "IsRequired" : true, //Optional, default value is true
-            "Ignore": false      //Optional, default value is false
-          }
+    "ModularServices": {
+        "TestLibrary.TestService": //Is Fullname of the Type of the Service
+        [
+            {
+              "Ignore": false, //Optional, default value is false
+              "DllPath": "<path to folder>\\TestModule.dll",
+              "PathType": "Absolute",
+              "FullNameOfType": "TestModule.Module",
+
+              //Actions are optional and have priority over the set handler
+              "OnConfigApplyExceptionAction": "Continue", 
+              "OnConstructorExceptionAction": "Continue",
+              "OnInitializeExceptionAction": "Continue"
+            }
         ]
-      }
-    ]
+    }
   }
 } 
 ````
 
 #### TestModule.dll
 ````csharp
-//Location: <AppPath>/TestModules
-
 using TestLibrary;
 using KoeLib.ModularServices;
 
